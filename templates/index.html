@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is This Website Safe?</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #0d6efd;
+            margin-bottom: 30px;
+        }
+
+        .question {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f1f8ff;
+        }
+
+        .btn-primary {
+            margin-top: 20px;
+        }
+
+        .help-text {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .form-check-label {
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">Is This Website Safe?</h1>
+        <p class="lead text-center mb-4">
+            Answer these simple questions about the website you're visiting to check if it might be dangerous.
+        </p>
+
+        <form action="/predict" method="post">
+            {% for question_id, question_data in questions.items() %}
+            <div class="question">
+                <label class="form-label fw-bold">{{ question_data.question }}</label>
+
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="radio" name="{{ question_id }}" id="{{ question_id }}_0"
+                        value="0" checked>
+                    <label class="form-check-label" for="{{ question_id }}_0">No</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="{{ question_id }}" id="{{ question_id }}_1"
+                        value="1">
+                    <label class="form-check-label" for="{{ question_id }}_1">Yes</label>
+                </div>
+
+                {% if question_id == 'is_suspicious_url' %}
+                <p class="help-text">Look for unusual characters, numbers, or misspellings in the URL.</p>
+                {% elif question_id == 'security_concerns' %}
+                <p class="help-text">Secure websites typically show a padlock icon in your browser's address bar.</p>
+                {% elif question_id == 'suspicious_behavior' %}
+                <p class="help-text">Watch for unexpected pop-ups or being redirected to different websites.</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">Check Website Safety</button>
+            </div>
+        </form>
+
+        <div class="mt-4 text-center">
+            <a href="/about" class="text-decoration-none">Learn more about how this tool works</a>
+        </div>
+        <!-- Add this right before the closing </div> of .container or at the end of the body -->
+        <div class="text-center mt-5 text-muted">
+            <small>
+                Developed with ❤️ by
+                <a href="https://github.com/harish-madhav" target="_blank" class="text-decoration-none">
+                    Naga Harish Madhav M
+                </a>
+            </small>
+        </div>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
